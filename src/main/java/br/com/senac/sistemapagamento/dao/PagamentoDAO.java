@@ -9,14 +9,29 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Implementação do repositório para a entidade Pagamento.
+ * Classe de acesso a dados (DAO) responsável pelas operações relacionadas à entidade {@link Pagamento}.
+ * Estende a classe {@link GenericDAO} e implementa a interface {@link PagamentoRepository}.
+ * Utiliza JPA para realizar consultas e manipulação de dados no banco.
+ * 
+ * @author alanm
  */
 public class PagamentoDAO extends GenericDAO<Pagamento> implements PagamentoRepository {
 
+    /**
+     * Construtor da classe PagamentoDAO.
+     * 
+     * @param entityManager o {@link EntityManager} a ser utilizado nas operações de persistência.
+     */
     public PagamentoDAO(EntityManager entityManager) {
         super(entityManager, Pagamento.class);
     }
 
+    /**
+     * Lista todos os pagamentos cadastrados no banco, incluindo os relacionamentos
+     * com empresa, funcionário e departamento (usando fetch join para evitar lazy loading).
+     * 
+     * @return uma lista de objetos {@link Pagamento}.
+     */
     @Override
     public List<Pagamento> listar() {
         try {
@@ -32,6 +47,12 @@ public class PagamentoDAO extends GenericDAO<Pagamento> implements PagamentoRepo
         }
     }
 
+    /**
+     * Exclui um pagamento do banco de dados com base no ID informado.
+     * 
+     * @param id o identificador do pagamento a ser excluído.
+     * @throws RuntimeException caso ocorra algum erro durante a exclusão
+     */
     @Override
     public void excluirPagamento(int id) {
         try {
@@ -47,6 +68,14 @@ public class PagamentoDAO extends GenericDAO<Pagamento> implements PagamentoRepo
         }
     }
 
+    /**
+     * Lista todos os pagamentos vinculados a uma ou mais empresas especificadas.
+     * Também carrega os relacionamentos com funcionário e departamento.
+     * 
+     * 
+     * @param empresas uma lista de objetos {@link Empresa} cujos pagamentos serão retornados.
+     * @return uma lista de objetos {@link Pagamento} associados às empresas informadas.
+     */
     @Override
     public List<Pagamento> listarPagamentosPorEmpresa(List<Empresa> empresas) {
         try {

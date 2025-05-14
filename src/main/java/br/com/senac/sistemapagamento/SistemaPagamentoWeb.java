@@ -1,7 +1,5 @@
 package br.com.senac.sistemapagamento;
 
-import br.com.senac.sistemapagamento.dao.DepartamentoDAO;
-import br.com.senac.sistemapagamento.models.Departamento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
